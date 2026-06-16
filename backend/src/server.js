@@ -46,25 +46,3 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   connectDB();
 });
-
-
-
-
-// import { fileURLToPath } from "url";
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
-// app.use(
-//   cors({
-//     origin: process.env.CLIENT_URL || "*",
-//     credentials: true,
-//   })
-// );
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "../../Frontend/dist")));
-
-//   app.get("*", (req, res) => {
-//     res.sendFile(
-//       path.join(__dirname, "../../Frontend/dist/index.html")
-//     );
-//   });
-// }
