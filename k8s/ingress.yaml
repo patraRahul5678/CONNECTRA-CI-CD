@@ -3,9 +3,9 @@ kind: Ingress
 metadata:
   name: connectra-ingress
 spec:
-  ingressClassName: nginx
+  ingressClassName: alb
   rules:
-    - host: corepilot.online
+    - host: connectra.corepilot.online
       http:
         paths:
           - path: /
