@@ -43,11 +43,11 @@ jobs:
       # Update Kubernetes manifests
       - name: Update Backend Image Tag
         run: |
-          sed -i "s|image: rahulpatrajee1/connectrabackend:.*|image: rahulpatrajee1/connectrabackend:${{ github.sha }}|g" k8s/backend-deployment.yaml
+          sed -i "s|image: rahulpatrajee1/connectrabackend:.*|image: rahulpatrajee1/connectrabackend:${{ github.sha }}|g" k8s/backend.yaml
 
       - name: Update Frontend Image Tag
         run: |
-          sed -i "s|image: rahulpatrajee1/connectrafrontend:.*|image: rahulpatrajee1/connectrafrontend:${{ github.sha }}|g" k8s/frontend-deployment.yaml
+          sed -i "s|image: rahulpatrajee1/connectrafrontend:.*|image: rahulpatrajee1/connectrafrontend:${{ github.sha }}|g" k8s/frontend.yaml
 
       - name: Commit Updated Manifests
         run: |
