@@ -1,0 +1,59 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      # Backend
+      - name: Build Backend Image
+        run: |
+          docker build -t rahulpatrajee1/connectrabackend:${{ github.sha }} ./backend
+
+      - name: Push Backend Image
+        run: |
+          docker push rahulpatrajee1/connectrabackend:${{ github.sha }}
+
+      # Frontend
+      - name: Build Frontend Image
+        run: |
+          docker build -t rahulpatrajee1/connectrafrontend:${{ github.sha }} ./frontend
+
+      - name: Push Frontend Image
+        run: |
+          docker push rahulpatrajee1/connectrafrontend:${{ github.sha }}
+
+      # Update Kubernetes manifests
+      - name: Update Backend Image Tag
+        run: |
+          sed -i "s|image: rahulpatrajee1/connectrabackend:.*|image: rahulpatrajee1/connectrabackend:${{ github.sha }}|g" k8s/backend-deployment.yaml
+
+      - name: Update Frontend Image Tag
+        run: |
+          sed -i "s|image: rahulpatrajee1/connectrafrontend:.*|image: rahulpatrajee1/connectrafrontend:${{ github.sha }}|g" k8s/frontend-deployment.yaml
+
+      - name: Commit Updated Manifests
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          git add k8s/
+          git commit -m "Update image tags to ${{ github.sha }}" || exit 0
+          git push
