@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: rahulpatrajee1/connectrafrontend:13eb3716b5681344f121d2b6d1bd071906f0fd11
+          image: rahulpatrajee1/connectrafrontend:f35947c419c3b19d3bc4f49c65115eb8e46f990b
           ports:
             - containerPort: 5000
           envFrom:
