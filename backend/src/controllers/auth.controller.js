@@ -9,8 +9,20 @@ export async function signup(req, res) {
             return res.status(400).json({ message: "All fileds are required.." });
         }
 
-        if (password.length < 6) {
-            return res.status(400).json({ message: "Password is of minimum 6 characters" });
+        if (password.length < 8) {
+            return res.status(400).json({
+                message: "Password must be at least 8 characters long."
+            });
+        }
+
+        const passwordRegex =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/;
+
+        if (!passwordRegex.test(password)) {
+            return res.status(400).json({
+                message:
+                    "Password must contain uppercase, lowercase, number and special character."
+            });
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -115,30 +127,30 @@ export async function onboard(req, res) {
             })
         }
 
-        const updatedUser=await User.findByIdAndUpdate(userId,{
+        const updatedUser = await User.findByIdAndUpdate(userId, {
             ...req.body,
-            isOnboarded:true,
-        },{new:true})
+            isOnboarded: true,
+        }, { new: true })
 
-        if(!updatedUser){
-            return res.status(404).json({message:"User not found"})
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" })
         }
 
         try {
             await upsertStreamUser({
-                id:updatedUser._id.toString(),
-                name:updatedUser.fullName,
-                image:updatedUser.profilePic || "",
+                id: updatedUser._id.toString(),
+                name: updatedUser.fullName,
+                image: updatedUser.profilePic || "",
 
             });
             console.log(`Stream user successfully updated ${updatedUser.fullName}`);
         } catch (streamError) {
-            console.log("Error in Stram Onboard Controller",streamError.message);
+            console.log("Error in Stram Onboard Controller", streamError.message);
         }
 
-        res.status(200).json({success:true,user:updatedUser})
+        res.status(200).json({ success: true, user: updatedUser })
     } catch (error) {
-       console.log("Onboarding Error",error);
-       res.status(500).json({message:"internal Server Error"});
+        console.log("Onboarding Error", error);
+        res.status(500).json({ message: "internal Server Error" });
     }
 }
