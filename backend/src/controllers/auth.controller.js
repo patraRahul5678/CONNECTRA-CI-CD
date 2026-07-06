@@ -67,6 +67,7 @@ export async function signup(req, res) {
             secure: process.env.NODE_ENV === "production" //cookie will only be sent over HTTPS in production
         });
         res.status(201).json({ success: true, user: newUser });
+        console.log("CorePilot Test");
 
     } catch (error) {
         console.error({
