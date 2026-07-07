@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: rahulpatrajee1/connectrabackend:a6878c7b42cd46bd5c9f7399503e37313aafc15c
+          image: rahulpatrajee1/connectrabackend:726aafa69525882dc50a45aab7563d905aed4832
           ports:
             - containerPort: 5000
           envFrom:
