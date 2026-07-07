@@ -83,11 +83,11 @@ export async function login(req, res) {
     try {
         let { email, password } = req.body;
         if (!email || !password) {
-            return res.status(400).json({ meassge: "All fileds are required" });
+            return res.status(400).json({ message: "All fields are required" });
         }
 
         const user = await User.findOne({ email });
-        if (!user) return res.status(401).json({ meassge: "Invalid Email or Password" });
+        if (!user) return res.status(401).json({ message: "Invalid Email or Password" });
 
         const isPasswordCorrect = await user.matchPassword(password);
         if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid Email or Password" });
