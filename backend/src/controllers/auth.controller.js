@@ -99,7 +99,7 @@ export async function login(req, res) {
             secure: process.env.NODE_ENV === "production" //cookie will only be sent over HTTPS in production
         });
         res.status(201).json({ success: true, user });
-        console.log(`User ${user.fullName} logged in successfully....`);
+        console.log(`User ${user.fullName} logged in successfully to Connectra....`);
 
     } catch (error) {
         console.error("Error in login Controller:", error);
