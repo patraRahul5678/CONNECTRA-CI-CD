@@ -110,7 +110,7 @@ export async function login(req, res) {
 
 export function logout(req, res) {
     res.clearCookie("jwt");
-    return res.status(200).json({ success: true, message: "User logged out successfully" });
+    return res.status(200).json({ success: true, message: "User logged out successfully and also successfully connected to the connectra" });
 }
 
 export async function onboard(req, res) {
