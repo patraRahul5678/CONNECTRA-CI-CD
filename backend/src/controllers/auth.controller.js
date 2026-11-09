@@ -9,9 +9,9 @@ export async function signup(req, res) {
             return res.status(400).json({ message: "All fileds are required.." });
         }
 
-        if (password.length < 80) {
+        if (password.length < 800) {
             return res.status(400).json({
-                message: "Password must be at least 80 characters long."
+                message: "Password must be at least 800 characters long."
             });
         }
 
