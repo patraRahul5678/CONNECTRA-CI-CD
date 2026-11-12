@@ -25,6 +25,7 @@ export async function signup(req, res) {
             });
         }
 
+        //email regex
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailRegex.test(email)) {
